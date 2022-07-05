@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.PianificaItinerarioActivity">
+
+    <TextView
+        android:id="@+id/InsertItinerary_textView_pianificaItinerario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Pianifica Itinerario"
+        android:textSize="24sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/InsertItinerary_imageView_iconMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/effect_ripple"
+        android:clickable="true"
+        android:onClick="pressMenuIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/InsertItinerary_textView_pianificaItinerario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/InsertItinerary_textView_pianificaItinerario"
+        app:srcCompat="@drawable/ic_menu" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/InsertItinerary_constraintLayout_puntiInteresse"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_textView_pianificaItinerario">
+
+        <RelativeLayout
+            android:id="@+id/InsertItinerary_relativeLayout_puntoPartenza"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/effect_ripple"
+            android:clickable="true"
+            android:foreground="@drawable/layout_border"
+            android:onClick="pressStartingPointField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/InsertItinerary_textView_indicePuntoPartenza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:text="P :" />
+
+            <TextView
+                android:id="@+id/InsertItinerary_textView_nomePuntoPartenza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/InsertItinerary_imageView_iconClosePuntoPartenza"
+                android:layout_toEndOf="@+id/InsertItinerary_textView_indicePuntoPartenza"
+                android:text="Scegli il Punto di Partenza" />
+
+            <ImageView
+                android:id="@+id/InsertItinerary_imageView_iconClosePuntoPartenza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:onClick="pressIconCancelStartingPoint"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_close" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/InsertItinerary_relativeLayout_mostraPuntiIntermedi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/effect_ripple"
+            android:clickable="true"
+            android:onClick="pressShowIntermediatePoints"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_relativeLayout_puntoPartenza">
+
+            <ImageView
+                android:id="@+id/InsertItinerary_imageView_mostraPunti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                app:srcCompat="@drawable/ic_dots" />
+
+            <TextView
+                android:id="@+id/InsertItinerary_textView_mostraPunti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="0dp"
+                android:layout_toEndOf="@+id/InsertItinerary_imageView_mostraPunti"
+                android:text="Mostra Punti Intermedi" />
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/InsertItinerary_constraintLayout_puntiIntermedi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_relativeLayout_mostraPuntiIntermedi">
+
+            <RelativeLayout
+                android:id="@+id/InsertItinerary_relativeLayout_nascondiPuntiIntermedi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/effect_ripple"
+                android:clickable="true"
+                android:onClick="pressHideIntermediatePoints"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/InsertItinerary_textView_nascondiPuntiIntermedi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="0dp"
+                    android:onClick="pressHideIntermediatePoints"
+                    android:text="Nascondi Punti Intermedi" />
+
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/InsertItinerary_listView_puntiIntermedi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:divider="@null"
+                android:dividerHeight="8dp"
+                android:listSelector="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_relativeLayout_nascondiPuntiIntermedi" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/InsertItinerary_relativeLayout_puntoDestinazione"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/effect_ripple"
+            android:clickable="true"
+            android:foreground="@drawable/layout_border"
+            android:onClick="pressDestinationPointField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_constraintLayout_puntiIntermedi">
+
+            <TextView
+                android:id="@+id/InsertItinerary_textView_indicePuntoDestinazione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="D :"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/InsertItinerary_textView_nomePuntoDestinazione"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/InsertItinerary_imageView_iconClosePuntoDestinzione"
+                android:layout_toEndOf="@+id/InsertItinerary_textView_indicePuntoDestinazione"
+                android:text="Scegli il Punto di Destinazione" />
+
+            <ImageView
+                android:id="@+id/InsertItinerary_imageView_iconClosePuntoDestinzione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:onClick="pressIconCancelDestinationPoint"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_close" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/InsertItinerary_relativeLayout_aggiungiPuntoIntermedio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/effect_ripple"
+            android:clickable="true"
+            android:onClick="pressAddIntermediatePoint"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_relativeLayout_puntoDestinazione">
+
+            <ImageView
+                android:id="@+id/InsertItinerary_imageView_aggiungiPuntoIntermedio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/InsertItinerary_textView_aggiungiPunto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toEndOf="@+id/InsertItinerary_imageView_aggiungiPuntoIntermedio"
+                android:text="Aggiungi Punto Intermedio" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/InsertItinerary_textView_selezionaPuntoInteressatoDaMappa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Seleziona il Punto Interessato"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_constraintLayout_puntiInteresse" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/InsertItinerary_constraintLayout_mappa"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/InsertItinerary_constraintLayout_opzioniSelezioneDaMappa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_textView_selezionaPuntoInteressatoDaMappa">
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/InsertItinerary_mapView_mappa"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/InsertItinerary_button_salva"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="Salva"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/lower_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/InsertItinerary_constraintLayout_opzioniSelezioneDaMappa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/lower_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_constraintLayout_mappa">
+
+        <TextView
+            android:id="@+id/InsertItinerary_textView_nomeIndirizzoSelezionatoDaMappa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/InsertItinerary_linearLayout_buttonsStartDestination"
+            app:layout_constraintEnd_toStartOf="@+id/InsertItinerary_imageView_cancelSetSelectedAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/InsertItinerary_linearLayout_buttonsStartDestination"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_textView_nomeIndirizzoSelezionatoDaMappa">
+
+            <Button
+                android:id="@+id/InsertItinerary_button_impostaPuntoPartenza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:minHeight="0dp"
+                android:onClick="pressButtonSetAsStartingPoint"
+                android:text="Imposta come Partenza"
+                android:textAllCaps="false"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/InsertItinerary_button_impostaPuntoDestinazione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:minHeight="0dp"
+                android:onClick="pressButtonSetAsDestinationPoint"
+                android:text="Imposta come Destinazione"
+                android:textAllCaps="false"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/InsertItinerary_linearLayout_buttonIntermediate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InsertItinerary_linearLayout_buttonsStartDestination">
+
+            <Button
+                android:id="@+id/InsertItinerary_button_impostaPuntoIntermedio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:minHeight="0dp"
+                android:onClick="pressButtonSetAsIntermediatePoint"
+                android:text="Imposta come Punto Intermedio"
+                android:textAllCaps="false"
+                android:textSize="11sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/InsertItinerary_imageView_cancelSetSelectedAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="pressIconCancel"
+            app:layout_constraintBottom_toTopOf="@+id/InsertItinerary_linearLayout_buttonsStartDestination"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lower_bar"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:background="@drawable/layout_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout><![CDATA[
+
+
+    />
+
+
+
+
+
+
+
+    ]]>
+</androidx.constraintlayout.widget.ConstraintLayout>
