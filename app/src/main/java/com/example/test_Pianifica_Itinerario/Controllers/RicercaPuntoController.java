@@ -29,6 +29,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class RicercaPuntoController {
@@ -134,13 +135,13 @@ public class RicercaPuntoController {
     }
 
 
-    public void searchInterestPoint(String searchString) {
+    public void searchInterestPoint(String searchString, int numResult) {
         if(searchString.isEmpty()){
             resultPoints.clear();
             resultPointsListAdapter.notifyDataSetChanged();
             return;
         }
-        ArrayList<Address> resultAddresses = addressDAO.findInterestPointsByString(searchString);
+        List<Address> resultAddresses = addressDAO.findInterestPointsByString(searchString, numResult);
         resultPoints.setResultPoints(resultAddresses);
         resultPointsListAdapter.notifyDataSetChanged();
     }

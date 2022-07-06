@@ -13,20 +13,21 @@ import org.osmdroid.util.GeoPoint;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PianificaItinerarioModel implements Observable {
 
     private Address startingPoint;
     private Address destinationPoint;
-    private ArrayList<Address> intermediatePoints;
+    private List<Address> intermediatePoints;
 
     private Address addressPointedOnMap;
     private Integer indexPointSelected;
 
     //TODO
-    private ArrayList<Road> roads;
+    private List<Road> roads;
 
-    private ArrayList<Observer> observers;
+    private List<Observer> observers;
 
 
     public PianificaItinerarioModel(){
@@ -91,11 +92,11 @@ public class PianificaItinerarioModel implements Observable {
 
 
 
-    public ArrayList<Address> getIntermediatePoints() {
+    public List<Address> getIntermediatePoints() {
         return intermediatePoints;
     }
 
-    public void setIntermediatePoints(ArrayList<Address> intermediatePoints) {
+    public void setIntermediatePoints(List<Address> intermediatePoints) {
         this.intermediatePoints.clear();
         this.intermediatePoints.addAll(intermediatePoints);
     }
@@ -168,7 +169,7 @@ public class PianificaItinerarioModel implements Observable {
     }
 
 
-    public ArrayList<Road> getRoads(){
+    public List<Road> getRoads(){
         return this.roads;
 
     }
@@ -177,7 +178,7 @@ public class PianificaItinerarioModel implements Observable {
         return this.roads.get(index);
     }
 
-    public void setRoads(ArrayList<Road> roads){
+    public void setRoads(List<Road> roads){
         this.roads.clear();
         this.roads.addAll(roads);
         notifyObservers();

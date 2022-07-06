@@ -6,12 +6,13 @@ import com.example.test_Pianifica_Itinerario.ObserverPattern.Observable;
 import com.example.test_Pianifica_Itinerario.ObserverPattern.Observer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RicercaPuntoModel implements Observable {
 
-    private ArrayList<Address> resultPoints;
+    private List<Address> resultPoints;
 
-    private ArrayList<Observer> observers;
+    private List<Observer> observers;
 
 
     public RicercaPuntoModel(){
@@ -22,11 +23,11 @@ public class RicercaPuntoModel implements Observable {
 
 
 
-    public ArrayList<Address> getResultPoints() {
+    public List<Address> getResultPoints() {
         return resultPoints;
     }
 
-    public void setResultPoints(ArrayList<Address> resultPoints) {
+    public void setResultPoints(List<Address> resultPoints) {
         this.resultPoints.clear();
         this.resultPoints.addAll(resultPoints);
 

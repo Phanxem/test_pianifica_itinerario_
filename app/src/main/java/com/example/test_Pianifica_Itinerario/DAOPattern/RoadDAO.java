@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface RoadDAO {
     Road findRoadByAddresses(Address startAddress, Address destinationAddress);
-    ArrayList<Road> findRoadsByAddresses(ArrayList<Address> addresses);
+    List<Road> findRoadsByAddresses(List<Address> addresses);
 
 }

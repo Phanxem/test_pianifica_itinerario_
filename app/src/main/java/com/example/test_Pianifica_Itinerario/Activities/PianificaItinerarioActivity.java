@@ -578,7 +578,7 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
         }
         if(pianificaItinerarioModel.hasIntermediatePoint()){
 
-            ArrayList<Address> intermediatePoints = pianificaItinerarioModel.getIntermediatePoints();
+            List<Address> intermediatePoints = pianificaItinerarioModel.getIntermediatePoints();
 
             for(int i = 0; i < intermediatePoints.size(); i++){
                 itineraryMarkers.add(createInterestPointMarker(i));
@@ -626,7 +626,7 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
             roadOverlays = null;
         }
 
-        ArrayList<Road> roads = pianificaItinerarioModel.getRoads();
+        List<Road> roads = pianificaItinerarioModel.getRoads();
 
 
         Log.i("TESTmap", ",apf,d");

@@ -17,12 +17,13 @@ import com.example.test_Pianifica_Itinerario.R;
 import com.example.test_Pianifica_Itinerario.Utils.AddressUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdapterPointSearchResults extends ArrayAdapter<Address> {
 
     private RicercaPuntoController ricercaPuntoController;
 
-    public ListAdapterPointSearchResults(Context context, ArrayList<Address> resultPoints, RicercaPuntoController controller) {
+    public ListAdapterPointSearchResults(Context context, List<Address> resultPoints, RicercaPuntoController controller) {
         super(context, R.layout.list_element_risultato_ricerca_punto,resultPoints);
 
         this.ricercaPuntoController = controller;

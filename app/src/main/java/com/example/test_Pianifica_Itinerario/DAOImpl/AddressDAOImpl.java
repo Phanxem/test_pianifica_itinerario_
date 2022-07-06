@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.test_Pianifica_Itinerario.DAOPattern.AddressDAO;
 import com.example.test_Pianifica_Itinerario.Utils.AddressUtils;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,7 +17,10 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
@@ -33,6 +37,8 @@ public class AddressDAOImpl implements AddressDAO {
     public static final String NOMINATIM_SERVICE_URL = "https://nominatim.openstreetmap.org/";
 
     public static final String OPERATON_REVERSE = "reverse";
+
+    public static final String OPERATION_SEARCH = "search";
 
 
 
@@ -106,7 +112,83 @@ public class AddressDAOImpl implements AddressDAO {
 
 
     @Override
-    public ArrayList<Address> findInterestPointsByString(String searchString) {
+    public List<Address> findInterestPointsByString(String searchString, int maxResults) {
+
+        String url = null;
+        try {
+            url = NOMINATIM_SERVICE_URL + OPERATION_SEARCH
+                    + "?format=json"
+                    + "&accept-language=" + Locale.getDefault().getLanguage()
+                    + "&addressdetails=1"
+                    + "&limit=" + maxResults
+                    + "&q=" + URLEncoder.encode(searchString,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        Call call = client.newCall(request);
+
+        CompletableFuture<List<Address>> completableFuture = new CompletableFuture<List<Address>>();
+
+        Log.d("URL", url);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("ERRORE: ", e.getMessage());
+                completableFuture.complete(null);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(!response.isSuccessful()){
+                    Log.e("ERRORE: ","Risposta chiamata api fallita");
+                    return;
+                }
+
+                String jsonStringResult = response.body().string();
+                Log.i("JSON: ", jsonStringResult);
+
+                JsonElement jsonElementResult = JsonParser.parseString(jsonStringResult);
+                JsonArray jsonArrayResult = jsonElementResult.getAsJsonArray();
+
+                List<Address> addresses = new ArrayList<Address>();
+
+                for(int i = 0; i < jsonArrayResult.size(); i++){
+                    JsonObject jsonObjectResult = jsonArrayResult.get(i).getAsJsonObject();
+                    Address address = AddressUtils.buildAddress(jsonObjectResult);
+                    if(address != null) addresses.add(address);
+                }
+
+                completableFuture.complete(addresses);
+            }
+        });
+
+
+        List<Address> results = null;
+
+        try {
+            results = completableFuture.get();
+        }
+        catch (InterruptedException e) {
+            //TODO ERRORE
+            e.printStackTrace();
+        }
+        catch (ExecutionException e) {
+            //TODO ERRORE
+            e.printStackTrace();
+        }
+        finally {
+            return results;
+        }
+
+/*
         ArrayList<Address> addresses = new ArrayList<Address>();
 
         Address address1 = new Address(Locale.getDefault());
@@ -135,6 +217,8 @@ public class AddressDAOImpl implements AddressDAO {
         addresses.add(address3);
 
         return addresses;
+
+ */
     }
 
 

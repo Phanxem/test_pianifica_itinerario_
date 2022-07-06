@@ -19,12 +19,13 @@ import com.example.test_Pianifica_Itinerario.R;
 import com.example.test_Pianifica_Itinerario.Utils.AddressUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdapterInterestPoints extends ArrayAdapter<Address> {
 
     private PianificaItinerarioController pianificaItinerarioController;
 
-    public ListAdapterInterestPoints(Context context, ArrayList<Address> interestPoints, PianificaItinerarioController controller) {
+    public ListAdapterInterestPoints(Context context, List<Address> interestPoints, PianificaItinerarioController controller) {
         super(context, R.layout.list_element_punto_intermedio,interestPoints);
 
         this.pianificaItinerarioController = controller;

@@ -56,7 +56,7 @@ public class RoadDAOImpl implements RoadDAO {
 
 
     @Override
-    public ArrayList<Road> findRoadsByAddresses(ArrayList<Address> addresses) {
+    public List<Road> findRoadsByAddresses(List<Address> addresses) {
         StringBuilder urlString = new StringBuilder(ROUTING_SERVICE_URL + MEAN_BY_FOOT);
 
         for (int i=0; i<addresses.size(); i++){

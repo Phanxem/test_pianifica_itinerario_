@@ -35,6 +35,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class PianificaItinerarioController {
@@ -359,14 +360,14 @@ public class PianificaItinerarioController {
     }
 
     public void updateRoads(){
-        ArrayList<Address> addresses = pianificaItinerarioModel.getAllInterestPoint();
+        List<Address> addresses = pianificaItinerarioModel.getAllInterestPoint();
 
         if(addresses.size()<=1){
             pianificaItinerarioModel.clearRoads();
             return;
         }
 
-        ArrayList<Road> roads = roadDAO.findRoadsByAddresses(addresses);
+        List<Road> roads = roadDAO.findRoadsByAddresses(addresses);
 
         pianificaItinerarioModel.setRoads(roads);
 

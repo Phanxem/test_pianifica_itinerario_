@@ -29,6 +29,8 @@ public class RicercaPuntoActivity extends AppCompatActivity implements Observer 
 
     public static final int REQUEST_CODE_RICERCA_PUNTO = 0;
 
+    public final static int MAX_NUM_RESULT = 20;
+
     //Controller
     RicercaPuntoController ricercaPuntoController;
     LocationManager locationManager;
@@ -140,7 +142,7 @@ public class RicercaPuntoActivity extends AppCompatActivity implements Observer 
 
     public void pressSearchButton(){
         String searchString = editText_barraRicerca.getText().toString();
-        ricercaPuntoController.searchInterestPoint(searchString);
+        ricercaPuntoController.searchInterestPoint(searchString, MAX_NUM_RESULT);
     }
 
 
