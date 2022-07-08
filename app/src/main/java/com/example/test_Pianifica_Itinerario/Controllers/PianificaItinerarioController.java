@@ -1,5 +1,6 @@
 package com.example.test_Pianifica_Itinerario.Controllers;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.test_Pianifica_Itinerario.Activities.RicercaPuntoActivity;
@@ -42,6 +44,8 @@ public class PianificaItinerarioController {
 
     public final static Integer STARTING_POINT_CODE = -2;
     public final static Integer DESTINATION_POINT_CODE = -1;
+
+    public final static int REQUEST_CODE = 3;
 
     private final String TAG = "pianificaItinC";
 
@@ -325,7 +329,9 @@ public class PianificaItinerarioController {
     }
 
 
-
+    public boolean hasStoragePermissions(){
+        return ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
 
 
 

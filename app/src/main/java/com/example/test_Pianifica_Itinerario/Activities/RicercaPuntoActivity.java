@@ -27,9 +27,7 @@ import com.example.test_Pianifica_Itinerario.R;
 
 public class RicercaPuntoActivity extends AppCompatActivity implements Observer {
 
-    public static final int REQUEST_CODE_RICERCA_PUNTO = 0;
-
-    public final static int MAX_NUM_RESULT = 20;
+    private final static int MAX_NUM_RESULT = 20;
 
     //Controller
     RicercaPuntoController ricercaPuntoController;
@@ -107,7 +105,7 @@ public class RicercaPuntoActivity extends AppCompatActivity implements Observer 
             return;
         }
         if (resultCode == RicercaPuntoController.CURRENT_POSITION_PERMISSIONS_REQUIRED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_RICERCA_PUNTO);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, RicercaPuntoController.REQUEST_CODE);
             return;
         }
 
@@ -122,7 +120,7 @@ public class RicercaPuntoActivity extends AppCompatActivity implements Observer 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == REQUEST_CODE_RICERCA_PUNTO) {
+        if (requestCode == RicercaPuntoController.REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i("TAG:sd " , "Calling Permission is granted");
                 ricercaPuntoController.selectCurrentPosition();

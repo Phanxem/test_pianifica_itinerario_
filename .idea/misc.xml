@@ -15,6 +15,17 @@
         <entry key="..\:/Users/franc/AndroidStudioProjects/testPianificaItinerario/app/src/main/res/layout/list_element_punto_interesse.xml" value="0.6339677891654466" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/testPianificaItinerario/app/src/main/res/layout/list_element_punto_intermedio.xml" value="0.6" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/testPianificaItinerario/app/src/main/res/layout/list_element_risultato_ricerca_punto.xml" value="0.536" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/drawable-anydpi/ic_directory.xml" value="0.290625" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/drawable-anydpi/ic_file.xml" value="0.290625" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/drawable-anydpi/ic_previously_directory.xml" value="0.290625" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/activity_import_gpxfile.xml" value="0.16077898550724637" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/activity_importa_file_gpx.xml" value="0.48977695167286245" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/activity_pianifica_itinerario.xml" value="0.23822463768115942" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/activity_ricerca_punto.xml" value="0.23822463768115942" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/list_element_file.xml" value="0.1334853090172239" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/list_element_files.xml" value="0.4" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/list_element_punto_intermedio.xml" value="0.264" />
+        <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/public/test_pianifica_itinerario/app/src/main/res/layout/list_element_risultato_ricerca_punto.xml" value="0.23007246376811594" />
         <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/test_Pianifica_Itinerario/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.15416666666666667" />
         <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/test_Pianifica_Itinerario/app/src/main/res/drawable-anydpi/ic_close.xml" value="0.18020833333333333" />
         <entry key="..\:/Users/franc/Documents/GitKraken/Android Studio/test_Pianifica_Itinerario/app/src/main/res/drawable-anydpi/ic_current_location.xml" value="0.290625" />

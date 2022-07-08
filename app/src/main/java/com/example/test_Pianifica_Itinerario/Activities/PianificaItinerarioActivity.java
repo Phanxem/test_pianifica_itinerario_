@@ -1,9 +1,13 @@
 package com.example.test_Pianifica_Itinerario.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.location.Address;
@@ -21,6 +25,7 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.test_Pianifica_Itinerario.Controllers.ImportaFileGPXController;
 import com.example.test_Pianifica_Itinerario.Controllers.PianificaItinerarioController;
 import com.example.test_Pianifica_Itinerario.Models.PianificaItinerarioModel;
 import com.example.test_Pianifica_Itinerario.ObserverPattern.Observer;
@@ -215,6 +220,11 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.PopupMenu_popupMenu_altro){
+                    if(!pianificaItinerarioController.hasStoragePermissions()){
+                        ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, ImportaFileGPXController.REQUEST_CODE);
+                        return false;
+                    }
+
                     Log.d("dsfs","click");
                     return true;
                 }
@@ -225,6 +235,22 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
         });
 
         popupMenu.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PianificaItinerarioController.REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i("TAG:sd " , "Calling Permission is granted");
+                //TODO go to importa gpx page
+            }
+            else {
+                //TODO ERRORE
+                Log.i("TAG:sd ", "Calling Permission is denied");
+            }
+        }
     }
 
     public void pressStartingPointField(View view) {

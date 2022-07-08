@@ -22,6 +22,7 @@ import com.example.test_Pianifica_Itinerario.ListAdapters.ListAdapterPointSearch
 import com.example.test_Pianifica_Itinerario.Models.RicercaPuntoModel;
 import com.example.test_Pianifica_Itinerario.R;
 import com.example.test_Pianifica_Itinerario.Utils.AddressUtils;
+import com.example.test_Pianifica_Itinerario.Utils.GPSUtils;
 import com.example.test_Pianifica_Itinerario.Utils.ParcelableAddress;
 
 import org.osmdroid.util.GeoPoint;
@@ -34,18 +35,20 @@ import java.util.List;
 
 public class RicercaPuntoController {
 
-    public final static Integer REQUEST_CODE = 0;
+
 
     private final static String TAG = "RicercaPuntoC";
 
     public final static String EXTRA_ADDRESS = "ADDRESS";
 
-    public final static Integer CURRENT_POSITION_OK = 0;
-    public final static Integer CURRENT_POSITION_NULL = 1;
-    public final static Integer CURRENT_POSITION_PERMISSIONS_REQUIRED = 2;
-    public final static Integer CURRENT_POSITION_GPS_FEATURE_NOT_PRESENT = 3;
-    public final static Integer CURRENT_POSITION_GPS_DISABLED = 4;
-    public final static Integer CURRENT_POSITION_ERROR = -1;
+    public final static int CURRENT_POSITION_OK = 0;
+    public final static int CURRENT_POSITION_NULL = 1;
+    public final static int CURRENT_POSITION_PERMISSIONS_REQUIRED = 2;
+    public final static int CURRENT_POSITION_GPS_FEATURE_NOT_PRESENT = 3;
+    public final static int CURRENT_POSITION_GPS_DISABLED = 4;
+    public final static int CURRENT_POSITION_ERROR = -1;
+
+    public static final int REQUEST_CODE = 0;
 
 
     //Views
@@ -88,16 +91,14 @@ public class RicercaPuntoController {
 
 
     public Integer selectCurrentPosition() {
-        //Verifica se il dispostivo ha il gps
-        PackageManager packageManager = activity.getPackageManager();
-        if(!packageManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)){
+
+        if(!GPSUtils.hasGPSFeature(activity)){
             //TODO ERRORE
             Log.e("RIC_PUNT: ", "GPS NOT PRESENT");
             return CURRENT_POSITION_GPS_FEATURE_NOT_PRESENT;
         }
 
-        //Verifica se il gps è attivo
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        if(!GPSUtils.isGPSEnabled(activity)){
             //TODO ERRORE
             Log.e("RIC_PUNT: ", "GPS DISABLED");
             return CURRENT_POSITION_GPS_DISABLED;
