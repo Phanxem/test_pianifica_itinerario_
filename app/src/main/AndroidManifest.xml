@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestPianificaItinerario">
         <activity
-            android:name=".Activities.PianificaItinerarioActivity"
+            android:name=".Activities.ImportaFileGPXActivity"
 
             android:exported="false" />
         <activity
@@ -32,7 +32,8 @@
             android:exported="false" />
         <activity
 
-            android:name=".Activities.ImportaFileGPXActivity"
+
+            android:name=".Activities.PianificaItinerarioActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

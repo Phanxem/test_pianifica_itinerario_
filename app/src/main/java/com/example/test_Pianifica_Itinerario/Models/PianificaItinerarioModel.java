@@ -138,6 +138,25 @@ public class PianificaItinerarioModel implements Observable {
     }
 
 
+    public void updateInterestPoints(List<Address> addresses){
+
+        if(addresses == null || addresses.isEmpty()) return;
+
+        this.startingPoint = addresses.get(0);
+        this.destinationPoint = addresses.get(addresses.size()-1);
+
+        this.intermediatePoints.clear();
+        for(Address address: addresses.subList(1,addresses.size()-1)){
+            this.intermediatePoints.add(address);
+        }
+
+        this.indexPointSelected = null;
+        this.addressPointedOnMap = null;
+
+
+        notifyObservers();
+    }
+
 
     public Address getAddressPointedOnMap() {
         return addressPointedOnMap;
@@ -201,7 +220,7 @@ public class PianificaItinerarioModel implements Observable {
     }
 
 
-    //UpdateRoads
+
     public ArrayList<Address> getAllInterestPoint(){
         ArrayList<Address> addresses = new ArrayList<Address>();
 

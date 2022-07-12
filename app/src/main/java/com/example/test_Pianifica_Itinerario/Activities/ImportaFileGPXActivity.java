@@ -59,6 +59,7 @@ public class ImportaFileGPXActivity extends AppCompatActivity implements Observe
 
 
     public void pressIconBack(View view) {
+        onBackPressed();
     }
 
     public void pressButton(View view) {
@@ -79,7 +80,6 @@ public class ImportaFileGPXActivity extends AppCompatActivity implements Observe
 
     public void pressParentDirectory(View view) {
         importaFileGPXController.openDirectory(importaFileGPXModel.getParentDirectory());
-
     }
 
     @Override

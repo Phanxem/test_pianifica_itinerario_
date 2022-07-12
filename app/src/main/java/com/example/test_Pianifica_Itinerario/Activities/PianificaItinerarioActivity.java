@@ -6,12 +6,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.location.Address;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -34,7 +34,6 @@ import com.example.test_Pianifica_Itinerario.Utils.AddressUtils;
 import com.example.test_Pianifica_Itinerario.Utils.Utils;
 
 import org.osmdroid.api.IMapController;
-import org.osmdroid.bonuspack.routing.GoogleRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -48,8 +47,6 @@ import org.osmdroid.views.overlay.FolderOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.Polyline;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,18 +211,20 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
 
     public void pressMenuIcon(View view) {
         PopupMenu popupMenu = new PopupMenu(this,imageView_iconMenu);
+        Activity activity = this;
 
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(item.getItemId() == R.id.PopupMenu_popupMenu_altro){
+                if(item.getItemId() == R.id.PopupMenu_popupMenu_importaFileGPX){
                     if(!pianificaItinerarioController.hasStoragePermissions()){
-                        ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, ImportaFileGPXController.REQUEST_CODE);
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, ImportaFileGPXController.REQUEST_CODE);
                         return false;
                     }
 
                     Log.d("dsfs","click");
+                    pianificaItinerarioController.openImportGPXFileScreen(activity);
                     return true;
                 }
                 else{
@@ -244,11 +243,16 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
         if (requestCode == PianificaItinerarioController.REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i("TAG:sd " , "Calling Permission is granted");
-                //TODO go to importa gpx page
             }
             else {
                 //TODO ERRORE
                 Log.i("TAG:sd ", "Calling Permission is denied");
+            }
+        }
+
+        if(requestCode == ImportaFileGPXController.REQUEST_CODE){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                pianificaItinerarioController.openImportGPXFileScreen(this);
             }
         }
     }
@@ -545,7 +549,7 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
 
         mapView.invalidate();
     }
-
+/*
     public BoundingBox generateBoundingBoxWithAllMarkers2(){
         double minLat = Double.MAX_VALUE;
         double maxLat = Double.MIN_VALUE;
@@ -574,6 +578,7 @@ public class PianificaItinerarioActivity extends AppCompatActivity implements Ob
 
         return boundingBox;
     }
+*/
 
     public BoundingBox generateBoundingBoxWithAllMarkers(){
         List<Overlay> items = itineraryMarkers.getItems();

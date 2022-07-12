@@ -5,6 +5,9 @@ import java.io.FileFilter;
 
 public class FileFilterUtils {
 
+    public static final String EXTENSION_PDF = "pdf";
+    public static final String EXTENSION_GPX = "gpx";
+
     public static boolean hasExtension(File file, String extension) {
         String fileExtension = getExtension(file);
         if(fileExtension == null) return false;

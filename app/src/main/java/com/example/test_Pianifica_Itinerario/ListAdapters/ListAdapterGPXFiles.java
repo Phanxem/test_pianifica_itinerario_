@@ -67,6 +67,9 @@ public class ListAdapterGPXFiles extends ArrayAdapter<File> {
                 }
                 //FILE
                 Log.i("LIST:", "file cliccato");
+                boolean result = importaFileGPXController.openGPXFile(file);
+                if(result) Log.d("LISTADAPTGPX", "conversione effettuata");
+                Log.d("LISTADAPTGPX", "conversione NON effettuata");
             }
         });
         return convertView;

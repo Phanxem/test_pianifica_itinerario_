@@ -50,6 +50,9 @@ public class RicercaPuntoController {
 
     public static final int REQUEST_CODE = 0;
 
+    public static final int RESULT_CODE_RETURN_POINT = 0;
+    public static final int RESULT_CODE_GET_POINT_FROM_MAP = 1;
+
 
     //Views
     private AppCompatActivity activity;
@@ -126,10 +129,10 @@ public class RicercaPuntoController {
         Address address = addressDAO.findInterestPointByGeoPoint(geoPoint);
         ParcelableAddress parcelableAddress = new ParcelableAddress(address);
 
-        //TODO da modificare
+
         Intent intent = new Intent();
         intent.putExtra(EXTRA_ADDRESS, parcelableAddress);
-        activity.setResult(AddressUtils.RESULT_OK, intent);
+        activity.setResult(RESULT_CODE_RETURN_POINT, intent);
         activity.finish();
         return CURRENT_POSITION_OK;
 
@@ -152,14 +155,14 @@ public class RicercaPuntoController {
 
         Intent intent = new Intent();
         intent.putExtra(EXTRA_ADDRESS, parcelableAddress);
-        activity.setResult(AddressUtils.RESULT_OK, intent);
+        activity.setResult(RESULT_CODE_RETURN_POINT, intent);
         activity.finish();
 
     }
 
     public void selectFromMap(){
         Intent intent = new Intent();
-        activity.setResult(AddressUtils.RESULT_GET_FROM_MAP, intent);
+        activity.setResult(RESULT_CODE_GET_POINT_FROM_MAP, intent);
         activity.finish();
     }
 }

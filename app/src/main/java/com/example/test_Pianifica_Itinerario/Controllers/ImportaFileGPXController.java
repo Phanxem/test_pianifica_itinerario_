@@ -1,37 +1,45 @@
 package com.example.test_Pianifica_Itinerario.Controllers;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.provider.ContactsContract;
+import android.content.Intent;
+import android.location.Address;
 import android.util.Log;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
+import com.example.test_Pianifica_Itinerario.DAOImpl.AddressDAOImpl;
+import com.example.test_Pianifica_Itinerario.DAOPattern.AddressDAO;
 import com.example.test_Pianifica_Itinerario.ListAdapters.ListAdapterGPXFiles;
 import com.example.test_Pianifica_Itinerario.Models.ImportaFileGPXModel;
 import com.example.test_Pianifica_Itinerario.Utils.FileFilterUtils;
+import com.example.test_Pianifica_Itinerario.Utils.ParcelableAddress;
+
+import org.osmdroid.util.GeoPoint;
 
 import java.io.File;
-import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+
+import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.WayPoint;
 
 public class ImportaFileGPXController {
 
     public static final int REQUEST_CODE = 1;
 
-    public static final String EXTENSION_PDF = "pdf";
+    public static final int RESULT_CODE_RETURN_ALL_ADDRESSES = 2;
+
+    public static final String EXTRA_ADDRESSES = "ADDRESSES";
 
 
     private AppCompatActivity activity;
     private ListAdapterGPXFiles filesListAdapter;
 
     private ImportaFileGPXModel importaFileGPXModel;
+
+    private AddressDAO addressDAO;
 
 
 
@@ -44,6 +52,7 @@ public class ImportaFileGPXController {
                 activity,
                 importaFileGPXModel.getFiles(),
                 this);
+        this.addressDAO = new AddressDAOImpl();
     }
 
     public void initListViewFiles(ListView listView_files) {
@@ -69,7 +78,7 @@ public class ImportaFileGPXController {
             return;
         }
 
-        List<File> files = Arrays.asList(directory.listFiles(FileFilterUtils.extensionFileFilter(EXTENSION_PDF)));
+        List<File> files = Arrays.asList(directory.listFiles(FileFilterUtils.extensionFileFilter(FileFilterUtils.EXTENSION_GPX)));
 
         importaFileGPXModel.set(directory,files);
         filesListAdapter.notifyDataSetChanged();
@@ -77,8 +86,52 @@ public class ImportaFileGPXController {
         return;
     }
 
-    public boolean hasParentDirectory(){
-        return (importaFileGPXModel.getCurrentDirectory() != null);
+    public boolean openGPXFile(File gpxFile) {
+        GPX.Reader gpxReader = GPX.reader();
+
+        try {
+            GPX gpx = gpxReader.read(gpxFile);
+            if(gpx != null) Log.i("IMPORTGPX","gpx readed");
+
+            List<WayPoint> wayPoints = gpx.getWayPoints();
+            if(wayPoints == null || wayPoints.isEmpty()){
+                Log.i("IMPORTGPX","waypoints NOT getted");
+                return false;
+            }
+
+
+            List<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
+            for(WayPoint wayPoint : wayPoints){
+                GeoPoint geoPoint = new GeoPoint(wayPoint.getLatitude().doubleValue(),wayPoint.getLongitude().doubleValue());
+                geoPoints.add(geoPoint);
+            }
+
+            List<Address> addresses = new ArrayList<Address>();
+            for(GeoPoint geoPoint: geoPoints){
+                Address address = addressDAO.findInterestPointByGeoPoint(geoPoint);
+                addresses.add(address);
+            }
+
+            ArrayList<ParcelableAddress> parcelableAddresses = new ArrayList<ParcelableAddress>();
+            for(Address address: addresses){
+                ParcelableAddress parcelableAddress = new ParcelableAddress(address);
+                parcelableAddresses.add(parcelableAddress);
+            }
+
+
+            Intent intent = new Intent();
+            intent.putParcelableArrayListExtra(EXTRA_ADDRESSES, parcelableAddresses);
+            activity.setResult(RESULT_CODE_RETURN_ALL_ADDRESSES, intent);
+            activity.finish();
+            return true;
+
+        }
+        catch (IOException e) {
+            Log.e("GPXCONTROLLER", "errore import", e);
+        }
+
+        return false;
+
     }
 
 

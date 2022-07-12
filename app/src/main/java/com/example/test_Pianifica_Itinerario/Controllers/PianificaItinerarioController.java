@@ -2,14 +2,10 @@ package com.example.test_Pianifica_Itinerario.Controllers;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -19,8 +15,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
+import com.example.test_Pianifica_Itinerario.Activities.ImportaFileGPXActivity;
 import com.example.test_Pianifica_Itinerario.Activities.RicercaPuntoActivity;
 import com.example.test_Pianifica_Itinerario.DAOImpl.AddressDAOImpl;
 import com.example.test_Pianifica_Itinerario.DAOImpl.RoadDAOImpl;
@@ -28,13 +24,10 @@ import com.example.test_Pianifica_Itinerario.DAOPattern.AddressDAO;
 import com.example.test_Pianifica_Itinerario.DAOPattern.RoadDAO;
 import com.example.test_Pianifica_Itinerario.Models.PianificaItinerarioModel;
 import com.example.test_Pianifica_Itinerario.ListAdapters.ListAdapterInterestPoints;
-import com.example.test_Pianifica_Itinerario.Utils.AddressUtils;
 import com.example.test_Pianifica_Itinerario.Utils.ParcelableAddress;
 
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +88,9 @@ public class PianificaItinerarioController {
                             return;
                         }
 
-                        //E' STATO SELEZIONATO UN PUNTO TRA I RISULTATI DI RICERCA
-                        if(result.getResultCode() == AddressUtils.RESULT_OK){
+                        //RITORNO DALLA SCHERMATA "RICERCA PUNTO"
+                        //VIENE RESTITUITO UN PUNTO
+                        if(result.getResultCode() == RicercaPuntoController.RESULT_CODE_RETURN_POINT){
                             if(result.getData() == null){
                                 //TODO ERROR
                                 return;
@@ -117,12 +111,35 @@ public class PianificaItinerarioController {
                         }
 
                         //E' STATA SCELTA L'OPZIONE DI SELEZIONARE UN PUNTO DALLA MAPPA
-                        if(result.getResultCode() == AddressUtils.RESULT_GET_FROM_MAP){
+                        if(result.getResultCode() == RicercaPuntoController.RESULT_CODE_GET_POINT_FROM_MAP){
                             pianificaItinerarioModel.notifyObservers();
                             Log.d(TAG, "GET FROM MAP");
                             return;
                         }
 
+                        //RITORNO DALLA SCHERMATA "IMPORTA FILE GPX"
+                        if(result.getResultCode() == ImportaFileGPXController.RESULT_CODE_RETURN_ALL_ADDRESSES){
+                            if(result.getData() == null){
+                                //TODO ERROR
+                                return;
+                            }
+                            if(result.getData().getParcelableArrayListExtra(ImportaFileGPXController.EXTRA_ADDRESSES) != null) {
+
+                                ArrayList<ParcelableAddress> parcelableAddresses = result.getData().getParcelableArrayListExtra(ImportaFileGPXController.EXTRA_ADDRESSES);
+
+                                List<Address> addresses = new ArrayList<Address>();
+                                for(ParcelableAddress parcelableAddress : parcelableAddresses){
+                                    addresses.add(parcelableAddress.getAddress());
+                                }
+
+
+                                pianificaItinerarioModel.updateInterestPoints(addresses);
+                                updateRoads();
+                                intermediatePointsListAdapter.notifyDataSetChanged();
+                            }
+                            Log.d(TAG, "ADDRESS trovato con successo");
+                            return;
+                        }
                     }
                 }
         );
@@ -318,7 +335,6 @@ public class PianificaItinerarioController {
 
 
 
-
     //TODO funzione fittizia
     //effettuata dal DAO
     public Address findInterestPoint() {
@@ -347,6 +363,11 @@ public class PianificaItinerarioController {
 
     public void openPointSearchScreen(Activity activity){
         Intent intent = new Intent(activity, RicercaPuntoActivity.class);
+        startForResult.launch(intent);
+    }
+
+    public void openImportGPXFileScreen(Activity activity){
+        Intent intent = new Intent(activity, ImportaFileGPXActivity.class);
         startForResult.launch(intent);
     }
 
